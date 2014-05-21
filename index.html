@@ -6,11 +6,6 @@
 		<meta name="description" content="Generates simple worksheets of arithmetic problems." />
 		<meta name="keywords" content="math,maths,arithmetic,worksheet,generator,tool,teachers" />
 		<meta name="author" content="David Millar (dave@davegoesthedistance.com)" />
-		<!--
-			PATCHES WELCOME!!!!!!! ==> dave@davegoesthedistance.com
-			Originally for Seth, usable by anyone.
-			Made by David Millar of thegriddle.net, starting 1/4/2012
-		-->
 		<title>Math Worksheet Generator</title>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -20,7 +15,10 @@
           parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { $_GET[key] = value; }),
           talltales = [],
           namecalling,
-          junkbox;
+          junkbox,
+          randInt,
+          problemRand,
+          coinFlip;
 
 			// talltales is a nested array for story problems, with variables thrown in surrounded by &---&
 			// each subarray is for a different operator
@@ -52,9 +50,36 @@
 				"A museum of &obj& paintings has opened. It has &numprod& paintings and &numa& rooms to display them in. How many paintings go in each room?" //DM
 				];
 			// namecalling is an array of names for the story problems
-			namecalling = ['Moises', 'Dave', 'Erin', 'Neal', 'Laura', 'Bri', 'Nancy', 'Jim', 'Seth', 'Albert', 'Julie', 'Nelson', 'Dan', 'Dayton', 'Sherry', 'Katie', 'Curtis', 'Matthew', 'Brad'];
+			namecalling = [
+        'Albert',
+        'Brad',
+        'Bri',
+        'Curtis',
+        'Dan',
+        'Dave',
+        'Dayton',
+        'Erin',
+        'Jim',
+        'Julie',
+        'Katie',
+        'Laura',
+        'Matthew',
+        'Moises',
+        'Nancy',
+        'Neal',
+        'Nelson',
+        'Seth',
+        'Sherry'
+      ];
 			// junkbox is an array of random objects to insert in stories
-			junkbox = ['spaceship', 'unicorn', 'pirate ship', 'race car', 'monster', 'robot'];
+			junkbox = [
+        'monster',
+        'pirate ship',
+        'race car',
+        'robot',
+        'spaceship',
+        'unicorn'
+      ];
 
 			/**
 			 * Random Integer (randInt)
@@ -64,7 +89,9 @@
 			 * @param max integer
 			 * @return integer
 			 */
-			function randInt(min,max){ return min + (Math.floor(Math.random() * (max-min+1))); }
+		  randInt = function (min,max){
+        return min + (Math.floor(Math.random() * (max-min+1)));
+      };
 
 			/**
 			 * Problem Random Number (problemRand)
@@ -72,7 +99,9 @@
 			 *
 			 * @return integer
 			 */
-			function problemRand(){ return randInt(minnum,maxnum); }
+			problemRand = function(){
+        return randInt(minnum,maxnum);
+      };
 
 			/**
 			 * Coin Flip (coinFlip)
@@ -80,7 +109,9 @@
 			 *
 			 * @return boolean
 			 */
-			function coinFlip(){ return (randInt(0,1) == 1); }
+			coinFlip = function(){
+        return (randInt(0,1) == 1);
+      };
 
 			/**
 			 * Section Roll (sectionRoll)
@@ -89,12 +120,13 @@
 			 * @param type string (optional) which should be one of "basic, basic3, xvar, story"
 			 * @return jQuery object
 			 */
-			function sectionRoll(type){
+			var sectionRoll = function (type){
+        var datcontent = "";
+
 				// selects a random problem type if none is supplied
 				type = type ? type : randInt(1,usabletypes.length)-1;
 				// creates our section div
 				$mystuff = $('<div/>', { text: 'Hey!' });
-				var datcontent = "";
 				// switch depending on problem type chosen
 				$mystuff.addClass(usabletypes[type]);
 				switch (usabletypes[type]) {
@@ -282,7 +314,8 @@
 				$mystuff.html(datcontent);
 				// add section to the column container
 				return $mystuff;
-			}
+			};
+
 			$(document).ready(function() {
 				// set defaults if no variables supplied in query string
 				maxnum = ($_GET['mymax']) ? parseInt($_GET['mymax']) : 10; $("#mymax").val(maxnum);
