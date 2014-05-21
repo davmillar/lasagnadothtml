@@ -5,9 +5,9 @@
 	  <meta name="format-detection" content="telephone=no" />
 		<meta name="description" content="Generates simple worksheets of arithmetic problems." />
 		<meta name="keywords" content="math,maths,arithmetic,worksheet,generator,tool,teachers" />
-		<meta name="author" content="David Millar (davmillar@gmail.com)" />
+		<meta name="author" content="David Millar (dave@davegoesthedistance.com)" />
 		<!--
-			PATCHES WELCOME!!!!!!! ==> davmillar@gmail.com
+			PATCHES WELCOME!!!!!!! ==> dave@davegoesthedistance.com
 			Originally for Seth, usable by anyone.
 			Made by David Millar of thegriddle.net, starting 1/4/2012
 		-->
@@ -16,12 +16,14 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 		<script type="text/javascript">
 			// This part grabs GET variables from the URL to use for settings, and pops them into $_GET[] so it's like PHP
-			var $_GET = [];
-			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { $_GET[key] = value; });
-			
+			var $_GET = [],
+          parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) { $_GET[key] = value; }),
+          talltales = [],
+          namecalling,
+          junkbox;
+
 			// talltales is a nested array for story problems, with variables thrown in surrounded by &---&
 			// each subarray is for a different operator
-			var talltales = [];
 			talltales['plus'] = [
 				"&char&'s garden has cherry tomatoes. One plant has &numa& and the other has &numb&. How many tomatoes is that altogether?", //DM
 				"Last weekend, &char& heard crickets outside. There were &numa& chirps Saturday &amp; &numb& Sunday. How many chirps did &char& hear total?", //DM
@@ -50,40 +52,40 @@
 				"A museum of &obj& paintings has opened. It has &numprod& paintings and &numa& rooms to display them in. How many paintings go in each room?" //DM
 				];
 			// namecalling is an array of names for the story problems
-			var namecalling = ['Moises', 'Dave', 'Erin', 'Neal', 'Laura', 'Bri', 'Nancy', 'Jim', 'Seth', 'Albert', 'Julie', 'Nelson', 'Dan', 'Dayton', 'Sherry', 'Katie', 'Curtis', 'Matthew', 'Brad'];
+			namecalling = ['Moises', 'Dave', 'Erin', 'Neal', 'Laura', 'Bri', 'Nancy', 'Jim', 'Seth', 'Albert', 'Julie', 'Nelson', 'Dan', 'Dayton', 'Sherry', 'Katie', 'Curtis', 'Matthew', 'Brad'];
 			// junkbox is an array of random objects to insert in stories
-			var junkbox = ['spaceship', 'unicorn', 'pirate ship', 'race car', 'monster', 'robot'];
-			
+			junkbox = ['spaceship', 'unicorn', 'pirate ship', 'race car', 'monster', 'robot'];
+
 			/**
 			 * Random Integer (randInt)
 			 * Returns a random number in a range given
-			 * 
+			 *
 			 * @param min integer
 			 * @param max integer
-			 * @return integer 
+			 * @return integer
 			 */
 			function randInt(min,max){ return min + (Math.floor(Math.random() * (max-min+1))); }
-			
+
 			/**
 			 * Problem Random Number (problemRand)
 			 * Returns a random number in the range allowed by the current settings
-			 * 
-			 * @return integer 
+			 *
+			 * @return integer
 			 */
 			function problemRand(){ return randInt(minnum,maxnum); }
-			
+
 			/**
 			 * Coin Flip (coinFlip)
 			 * Returns true or false randomly
-			 * 
+			 *
 			 * @return boolean
 			 */
 			function coinFlip(){ return (randInt(0,1) == 1); }
-			
+
 			/**
 			 * Section Roll (sectionRoll)
 			 * Creates a div tag as a jQuery object, populates it with content, and returns it
-			 * 
+			 *
 			 * @param type string (optional) which should be one of "basic, basic3, xvar, story"
 			 * @return jQuery object
 			 */
@@ -325,7 +327,7 @@
 					div sub{vertical-align:bottom;}
 				div.story,div.time,div.longdiv{font-size:9.5pt;line-height:15pt;}
 				div.longdiv span{margin-left:5px;padding:1px 5px;border:1px solid #444;border-width:1px 0 0 1px;letter-spacing:1pt;}
-				
+
 			#noprint{background:#fff;width:432pt;margin:4.5pt auto;padding:9pt 18pt;}
 				#noprint a{color:#069;}
 				#noprint span{color:#069;border-bottom:1pt dashed;cursor:help;}
@@ -334,11 +336,11 @@
 				#mymin,#mymax{width:48pt;}
 				#types,#signs{width:276pt;float:right;}
 				hr{width:100%;height:0;border:0;border-top:1pt dashed #bbb;}
-				
+
 			::-webkit-selection{background:#069;color:#fff;}
 			::-moz-selection{background:#069;color:#fff;}
 			::selection{background:#069;color:#fff;}
-			
+
 			@media print{
 				body{background:#fff;}
 				#noprint{display:none;}
@@ -351,7 +353,7 @@
 		<section id="noprint">
 			<h1>Basic Math Worksheet Generator</h1>
 			<p>I release the generator's code and my <span title="marked with DM in the source">story problem contributions</span> under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>. That's fancy nerd-talk for "you can use it for home-schooling or in class, as long as you're not selling it." <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0;float:right;margin:5px;" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a></p>
-			<p>If you <em>do</em> happen to remix this and do something neat with it, I'd love if you <a href="mailto:davmillar@gmail.com">email me</a> so I can check it out. <a href="mailto:davmillar@gmail.com?subject=Worksheet+Generator+Patch">Patches welcome</a>.</p>
+			<p>If you <em>do</em> happen to remix this and do something neat with it, I'd love if you <a href="mailto:dave@davegoesthedistance.com">email me</a> so I can check it out. <a href="mailto:dave@davegoesthedistance.com?subject=Worksheet+Generator+Patch">Patches welcome</a>.</p>
 			<p>Some story problems by: <span title="marked with BL in the source">Bri Luginbill</span></p>
 			<hr/>
 			<h2>How to Use</h2>
@@ -366,10 +368,10 @@
 				<br/-->
 				<label for="types">Problem Types:</label>
 				<input type="text" name="types" id="types" value="all" /> <span title="Use some combination of the types listed below separated by spaces, or 'all'. You can reuse a type more than once to make it more likely to appear.">What?</span><br/>
-				
+
 				<label for="signs">Operators:</label>
 				<input type="text" name="signs" id="signs" value="plus minus times div" /> <span title="Use some combination of 'plus', minus', 'times', and 'div' separated by spaces. You can reuse a sign more than once to make it more likely to appear.">What?</span><br/>
-				
+
 				<label for="mymin">Min:</label>
 				<input type="number" min="2" max="999" name="mymin" id="mymin" value="2" />
 				<label for="mymax">Max:</label>
@@ -389,7 +391,7 @@
 			<span title="Long division. (e.g. 2763 &divide; 9)">longdiv</span> &middot;
 			<span title="Decimals and percentages. (e.g. 10% of 60, 0.6 as a percentage)">deciper</span>
 			<hr/>
-			<p>Created by David Millar of <a href="http://thegriddle.net">thegriddle.net</a> on 1/4/2012. Last updated 3/15/2013.</p>
+			<p>Created by <a href="http://davegoesthedistance.com">David Millar</a> on 1/4/2012. Last updated 5/21/2014.</p>
 			<p>Don't worry &#8212; this stuff down here won't print. This page is all self-contained &#8212; you can save it as a file and use it even without an Internet connection.</p>
 		</section>
 	</body>
